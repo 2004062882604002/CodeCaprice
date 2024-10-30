@@ -15,7 +15,8 @@ int* searchRange(int* nums, int numsSize, int target, int* returnSize) {
     int left = 0;
     int right = numsSize - 1;
     int sym = 0;
-    returnSize[2] = {-1, -1};
+    returnSize[0] = -1;
+    returnSize[1] = -1;
     while(left <= right)
     {
         int middle = (right + left) / 2;
