@@ -16,34 +16,21 @@ int main(void)
 
 int* sortedSquares(int* nums, int numsSize, int* returnSize) {
     *returnSize = numsSize;
-    int left = 0;
-    int right = numsSize - 1;
+    int k = numsSize - 1;
+    int *result = (int *)malloc(sizeof(int) * numsSize);
 
-    int *ans = (int *)malloc(sizeof(int) * numsSize);
-    for(int i = numsSize-1; i > -1; i--)
+    for(int i = 0, j = numsSize - 1; i <= j; )
     {
-        if(nums[left] * nums[left] > nums[right] * nums[right])
+        if(nums[j] * nums[j] > nums[i] * nums[i])
         {
-            ans[i--] = nums[left]*nums[left];
-            ans[i] = nums[right]*nums[right];
-        }
-        else if(nums[left] * nums[left] < nums[right] * nums[right])
-        {
-            ans[i--] = nums[right]*nums[right];
-            ans[i] = nums[left]*nums[left];  
+            result[k--] = nums[j] * nums[j];
+            j--;
         }
         else
         {
-            if(i == 0)
-                ans[i] = nums[left]*nums[left];
-            else
-            {
-                ans[i--] = nums[right]*nums[right];
-                ans[i] = nums[left]*nums[left];
-            } 
+            result[k--] = nums[i] * nums[i];
+            i++;
         }
-        right --;
-        left ++;
     }
-    return ans;
+    return result;
 }
