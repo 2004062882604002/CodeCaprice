@@ -1,6 +1,8 @@
 #include <stdio.h>
 
 int removeElement(int* nums, int numsSize, int val);
+int removeElement2(int* nums, int numsSize, int val);
+
 int main(void)
 {
     int nums[8] = {0,1,2,2,3,0,4,2};
@@ -26,5 +28,17 @@ int removeElement(int* nums, int numsSize, int val) {
             i--;
         }
     }
-    return numsSize - sym;
+    return length;
+}
+
+int removeElement2(int* nums, int numsSize, int val) {
+    int slow = 0;
+    for(int fast = 0;fast < numsSize; fast++)
+    {
+        if(val != nums[fast])
+        {
+            nums[slow++] = nums[fast];
+        }
+    }
+    return slow;
 }
