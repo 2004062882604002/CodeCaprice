@@ -6,20 +6,21 @@ int main(void)
     int length = 0;
     int sum = 0;
     scanf("%d", &length);
-    int* arr = (int* )malloc(sizeof(int) * length);
-    for(int i = 0; i < length; i++)
+    int* arr = (int* )malloc(sizeof(int) * (length + 1));
+    arr[0] = 0;
+    for(int i = 1; i < length + 1; i++)
     {
-        scanf("%d", &arr[i]);
+        int num;
+        scanf("%d", &num);
+        arr[i] = arr[i - 1] + num;
     }
-    while(1)
+
+    int begin, end;
+    while(scanf("%d %d", &begin, &end) == 2)
     {
-        int begin, end;
-        scanf("%d %d", &begin, &end);
-        for(int i = begin; i < end + 1; i++)
-        {
-            sum = sum + arr[i];
-        }
-        printf("%d", sum);
+        sum = arr[end + 1] - arr[begin];
+        printf("%d\n", sum);
     }
+    free(arr);
     return 0;
 }
