@@ -1,17 +1,16 @@
-/*
- * @lc app=leetcode.cn id=203 lang=c
- *
- * [203] 移除链表元素
- */
-
-// @lc code=start
-
+#include <stdio.h>
+#include <stdlib.h>
 
 struct ListNode {
       int val;
-     struct ListNode *next;
+     struct ListNode* next;
 };
+struct ListNode* removeElements(struct ListNode* head, int val);
+int main(void)
+{
 
+    return 0;
+}
 struct ListNode* removeElements(struct ListNode* head, int val) {
     typedef struct ListNode ListNode;
     ListNode* dNode;
