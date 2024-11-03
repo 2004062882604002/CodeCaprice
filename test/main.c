@@ -1,34 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct MyLinkedList{
+// 定义链表节点结构体
+typedef struct LinkedNode{
     int val;
-    struct MyLinkedList* next;
-} MyLinkedList;
+    struct LinkedNode* next;
+} LinkedNode;
+
+// 定义链表结构体，设置虚拟头节点以及链表长度
+typedef struct
+{
+    LinkedNode* dummyhead;
+    int size;
+}LinkedList;
 
 
-MyLinkedList* myLinkedListCreate() {
-    MyLinkedList* obj = (MyLinkedList* )malloc(sizeof(MyLinkedList));
-    obj->next = NULL;
-    obj->val = INT_MAX;
-    return obj;
+LinkedList* myLinkedListCreate() {
+    LinkedList* list = (LinkedList* )malloc(sizeof(LinkedList));
+    list->dummyhead = (LinkedNode* )malloc(sizeof(LinkedNode));
+    list->dummyhead->next = NULL;
+    list->size = 0;
+    return list;
 }
 
-int myLinkedListGet(MyLinkedList* obj, int index) {
-    MyLinkedList* cur = obj;
-    while(cur != NULL)
-    {       
-        if(index == 0)
-        {
-            return cur->val;
-        }
-        else
-        {
-            cur = cur->next;
-            index--;
-        }
+int myLinkedListGet(LinkedList* obj, int index) {
+   if(index < 0 || index > obj->size - 1)
+        return -1;
+    
+    LinkedNode* cur = obj->dummyhead->next;
+    while(index > 0)
+    {
+        cur = cur->next;
+        index--;
     }
-    return -1;
+    return cur->val;
 }
 
 void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
