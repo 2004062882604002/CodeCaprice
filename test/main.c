@@ -10,6 +10,7 @@ typedef struct MyLinkedList{
 MyLinkedList* myLinkedListCreate() {
     MyLinkedList* obj = (MyLinkedList* )malloc(sizeof(MyLinkedList));
     obj->next = NULL;
+    obj->val = INT_MAX;
     return obj;
 }
 
@@ -31,11 +32,13 @@ int myLinkedListGet(MyLinkedList* obj, int index) {
 }
 
 void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
-    if(obj->next != NULL)
+    if(obj->val != INT_MAX)
     {
         MyLinkedList* head = (MyLinkedList* )malloc(sizeof(MyLinkedList));
         head->val = val;
         head->next = obj;
+        obj = head;
+        
     }
     else
     {
@@ -123,12 +126,18 @@ void myLinkedListFree(MyLinkedList* obj) {
 int main(void)
 {
     MyLinkedList* obj = myLinkedListCreate();
+    myLinkedListAddAtHead(obj, 7);
+    myLinkedListAddAtHead(obj, 2);
     myLinkedListAddAtHead(obj, 1);
-    myLinkedListAddAtTail(obj, 3);
-    myLinkedListAddAtIndex(obj, 1, 2);    // 链表变为 1->2->3
-    int a = myLinkedListGet(obj,1);              // 返回 2
-    myLinkedListDeleteAtIndex(obj, 1);   // 现在，链表变为 1->3
-    int b = myLinkedListGet(obj,1);              // 返回 3
+    myLinkedListAddAtIndex(obj, 3,0);
+    myLinkedListDeleteAtIndex(obj, 2);
+    myLinkedListAddAtHead(obj, 6);
+    myLinkedListAddAtTail(obj, 4);
+    int a = myLinkedListGet(obj,4);
+    myLinkedListAddAtHead(obj, 4);
+    myLinkedListAddAtIndex(obj, 5, 0);
+    myLinkedListAddAtHead(obj, 6);
+
     return 0;
 }
 
