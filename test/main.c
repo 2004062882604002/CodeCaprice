@@ -1,102 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 定义链表节点结构体
-typedef struct LinkedNode{
+struct ListNode {
     int val;
-    struct LinkedNode* next;
-} LinkedNode;
+    struct ListNode *next;
+};
 
-// 定义链表结构体，设置虚拟头节点以及链表长度
-typedef struct
-{
-    LinkedNode* dummyhead;
-    int size;
-}MyLinkedList;
-
-
-MyLinkedList* myLinkedListCreate() {
-    MyLinkedList* list = (MyLinkedList* )malloc(sizeof(MyLinkedList));
-    list->dummyhead = (LinkedNode* )malloc(sizeof(LinkedNode));
-    list->dummyhead->next = NULL;
-    list->size = 0;
-    return list;
-}
-
-int myLinkedListGet(MyLinkedList* obj, int index) {
-   if(index < 0 || index > obj->size - 1)
-        return -1;
-    
-    LinkedNode* cur = obj->dummyhead->next;
-    while(index > 0)
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+    typedef struct ListNode ListNode;
+    ListNode* dummyhead = (ListNode* )malloc(sizeof(ListNode));
+    dummyhead->next = head;
+    ListNode* quk = dummyhead;
+    ListNode* slow = dummyhead;
+    int index = 0;
+    while(quk->next != NULL)
     {
-        cur = cur->next;
-        index--;
+        while(index <= n)
+        {
+            quk = quk->next;
+            index++;
+        }
+        quk = quk->next;
+        slow = slow->next;
     }
-    return cur->val;
+    ListNode* temp = slow->next;
+    slow->next = slow->next->next;
+    free(temp);
+    return dummyhead->next;
 }
-
-void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
-    LinkedNode* cur = (LinkedNode* )malloc(sizeof(LinkedNode));
-    cur->next = obj->dummyhead->next;
-    obj->dummyhead->next = cur;
-    cur->val = val;
-    (obj->size)++;
-}
-
-void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
-    LinkedNode* cur = obj->dummyhead->next;
-    LinkedNode* last = (LinkedNode* )malloc(sizeof(LinkedNode));
-    for(int i = 0;i < obj->size; i++)
-    {
-        cur = cur->next;
-    }
-    cur->next = last;
-    last->next = NULL;
-    last->val = val;
-    obj->size++;
-}
-
-void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
-    if(index < 0 || index > obj->size - 1)
-        return ;
-    LinkedNode* cur = obj->dummyhead->next;
-    LinkedNode* tmp = (LinkedNode* )malloc(sizeof(LinkedNode));
-    tmp->val = val;
-    
-    while(index > 1)
-    {
-        cur = cur->next;
-        index--;
-    }
-
-    tmp->next = cur->next;
-    cur->next = tmp;
-    obj->size++;
-
-}
-
-void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
-    if(index < 0 || index > obj->size - 1)
-        return ;
-    LinkedNode* cur = obj->dummyhead->next;
-    while(index > 1)
-    {
-        cur = cur->next;
-        index--;
-    }
-    cur->next = cur->next->next;
-    obj->size--;
-}
-
-void myLinkedListFree(MyLinkedList* obj) {
-    free(obj);
-}
-
 
 
 int main(void)
 {
+    typedef struct ListNode ListNode;
+    
     return 0;
 }
 
