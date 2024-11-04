@@ -6,28 +6,33 @@ struct ListNode {
     struct ListNode *next;
 };
 
-struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+
+struct ListNode *detectCycle(struct ListNode *head) {
     typedef struct ListNode ListNode;
-    ListNode* dummyhead = (ListNode* )malloc(sizeof(ListNode));
-    dummyhead->next = head;
-    ListNode* quk = dummyhead;
-    ListNode* slow = dummyhead;
-    int index = 0;
-    while(quk->next != NULL)
+    ListNode* fast = head;
+    ListNode* slow = head;
+    while(fast->next != NULL && fast->next->next != NULL) //快指针一直在前面所以不用管slow
     {
-        while(index <= n)
-        {
-            quk = quk->next;
-            index++;
-        }
-        quk = quk->next;
+        fast = fast->next->next;
         slow = slow->next;
+        if(fast == slow)  // 确定存在环形
+        {
+            slow = head;
+            while(slow != fast)
+            {
+                slow = slow->next;
+                fast = fast->next;
+            }
+            return slow;
+        }
+        else
+        {
+            return NULL;
+        }
     }
-    ListNode* temp = slow->next;
-    slow->next = slow->next->next;
-    free(temp);
-    return dummyhead->next;
 }
+
+
 
 
 int main(void)
