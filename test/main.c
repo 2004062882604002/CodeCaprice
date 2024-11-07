@@ -1,38 +1,44 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
-    char arr[10000];
-    char num[7] = "number";
-    if (scanf("%s", arr) != 1) {
-        fprintf(stderr, "Input error\n");
-        return 1;
-    }
-    size_t slow = 0;
-    char* result = (char*)malloc(sizeof(char) * (strlen(arr) * 6 + 1));
-    if (result == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        return 1;
+    char str[100000];
+    scanf("%s", str);
+    int len = strlen(str);
+    int count = 0;
+    // 统计字符串中的数字字符个数
+    for(int i = 0; i < len; i++)
+    {
+        if(str[i] >= '0' && str[i] <= '9')
+            count++;
     }
 
-    for (size_t i = 0; i < strlen(arr); i++)
+    // 最后result的长度
+    int newlength = len + 5 * count;
+    int newindex = newlength - 1;
+    if(newlength > 100000)
+        return 0;
+    // 确保为‘0’结尾
+    str[newlength] = ' ';
+    
+    for(int i = len - 1; i >= 0; i--)
     {
-        if ((int)arr[i] >= 48 && (int)arr[i] <= 57) // 数字的ASCII
+        if(str[i] >= '0' && str[i] <= '9')  // 判断是数字字符
         {
-            strncpy(result + slow, num, 6);
-            slow += 6;
+            str[newindex-- ] = 'r';
+            str[newindex-- ] = 'e';
+            str[newindex-- ] = 'b';
+            str[newindex-- ] = 'm';
+            str[newindex-- ] = 'u';
+            str[newindex-- ] = 'n';
         }
         else
         {
-            result[slow++] = arr[i];
+            str[newindex--] = str[i];
         }
     }
-    result[slow] = '\0'; // 确保结果字符串以空字符结尾
-
-    printf("%s", result);
-
-    free(result); // 释放动态分配的内存
+    printf("%s", str);
     return 0;
 }
