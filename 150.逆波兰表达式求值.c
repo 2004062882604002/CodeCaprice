@@ -46,39 +46,38 @@ int peek(StackNode* top) {
 int evalRPN(char** tokens, int tokensSize) {
     StackNode* stack = (StackNode* )malloc(sizeof(StackNode));
     stack = createStack();
+    int num1, num2;
     for(int i = 0; i < tokensSize; i++)
     {
-        if(*tokens[i] == '+')
+        // if(tokens[i] == "+")，有问题
+        //在 C 语言中，字符串比较应该使用 strcmp 而不是 ==。== 只是比较指针是否相等，而不是字符串内容
+        if(strcmp(tokens[i], "+") == 0)
         {
-            int num1, num2;
-            num1 = peek(stack);
-            num2 = stack->next->value;
-            push(stack, num1 + num2);
+            num1 = pop(&stack);
+            num2 = pop(&stack);
+            push(&stack, num2 + num1);
         }
-        else if(*tokens[i] == '-')
+        else if(strcmp(tokens[i], "-") == 0)
         {
-            int num1, num2;
-            num1 = peek(stack);
-            num2 = stack->next->value;
-            push(stack, num1 - num2);
+            num1 = pop(&stack);
+            num2 = pop(&stack);
+            push(&stack, num2 - num1);
         }
-        else if(*tokens[i] == '*')
+        else if(strcmp(tokens[i], "*") == 0)
         {
-            int num1, num2;
-            num1 = peek(stack);
-            num2 = stack->next->value;
-            push(stack, num1 * num2);
+            num1 = pop(&stack);
+            num2 = pop(&stack);
+            push(&stack, num2 * num1);
         }
-        else if(*tokens[i] == '/')
+        else if(strcmp(tokens[i], "/") == 0)
         {
-            int num1, num2;
-            num1 = peek(stack);
-            num2 = stack->next->value;
-            push(stack, num1 / num2);
+            num1 = pop(&stack);
+            num2 = pop(&stack);
+            push(&stack, num2 / num1);
         }
         else   // 数字
         {
-            push(stack, '*tokens[i]' - '0');
+            push(&stack, atoi(tokens[i]));
         }
     }
     return peek(stack);
