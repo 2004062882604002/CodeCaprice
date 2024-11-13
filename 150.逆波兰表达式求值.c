@@ -6,9 +6,6 @@
 
 // @lc code=start
 // 一直是两个数在做运算，没有遇到 + - * / 就存储，遇到了就是最近两个值做运算
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 typedef struct StackNode {
     int value;
@@ -49,47 +46,42 @@ int peek(StackNode* top) {
 int evalRPN(char** tokens, int tokensSize) {
     StackNode* stack = (StackNode* )malloc(sizeof(StackNode));
     stack = createStack();
-    int num1, num2;
     for(int i = 0; i < tokensSize; i++)
     {
-        if(tokens[i] == "+")
+        if(*tokens[i] == '+')
         {
-            num1 = pop(&stack);
-            num2 = pop(&stack);
-            push(&stack, num2 + num1);
+            int num1, num2;
+            num1 = peek(stack);
+            num2 = stack->next->value;
+            push(stack, num1 + num2);
         }
-        else if(tokens[i] == "-")
+        else if(*tokens[i] == '-')
         {
-            num1 = pop(&stack);
-            num2 = pop(&stack);
-            push(&stack, num2 - num1);
+            int num1, num2;
+            num1 = peek(stack);
+            num2 = stack->next->value;
+            push(stack, num1 - num2);
         }
-        else if(tokens[i] == "*")
+        else if(*tokens[i] == '*')
         {
-            num1 = pop(&stack);
-            num2 = pop(&stack);
-            push(&stack, num2 * num1);
+            int num1, num2;
+            num1 = peek(stack);
+            num2 = stack->next->value;
+            push(stack, num1 * num2);
         }
-        else if(tokens[i] == "/")
+        else if(*tokens[i] == '/')
         {
-            num1 = pop(&stack);
-            num2 = pop(&stack);
-            push(&stack, num2 / num1);
+            int num1, num2;
+            num1 = peek(stack);
+            num2 = stack->next->value;
+            push(stack, num1 / num2);
         }
         else   // 数字
         {
-            push(&stack, atoi(tokens[i]));
+            push(stack, '*tokens[i]' - '0');
         }
     }
     return peek(stack);
-}
-
-int main() {
-    char* tokens[] = {"2","1","+","3","*"};
-    int tokensSize = 5;
-    int result = evalRPN(tokens, tokensSize);
-    printf("Result: %d\n", result); // 应该输出 9
-    return 0;
 }
 // @lc code=end
 
