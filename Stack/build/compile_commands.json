@@ -1,0 +1,8 @@
+[
+{
+  "directory": "D:/BaiduSyncdisk/CodeCaprice/Stack/build",
+  "command": "E:\\Program\\mingw64\\bin\\gcc.exe   -g -o CMakeFiles\\stack.dir\\main.c.obj -c D:\\BaiduSyncdisk\\CodeCaprice\\Stack\\main.c",
+  "file": "D:/BaiduSyncdisk/CodeCaprice/Stack/main.c",
+  "output": "CMakeFiles/stack.dir/main.c.obj"
+}
+]
