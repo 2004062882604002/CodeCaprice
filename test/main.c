@@ -2,43 +2,92 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(void)
-{
-    char str[100000];
-    scanf("%s", str);
-    int len = strlen(str);
-    int count = 0;
-    // 统计字符串中的数字字符个数
-    for(int i = 0; i < len; i++)
-    {
-        if(str[i] >= '0' && str[i] <= '9')
-            count++;
-    }
+// 将字符串存储进栈里面，并且判断如果和栈顶top相同则不存储，否则存储
+typedef struct StackNode {
+    int value;
+    struct StackNode* next;
+} StackNode;
 
-    // 最后result的长度
-    int newlength = len + 5 * count;
-    int newindex = newlength - 1;
-    if(newlength > 100000)
-        return 0;
-    // 确保为‘0’结尾
-    str[newlength] = ' ';
-    
-    for(int i = len - 1; i >= 0; i--)
+StackNode* createStack() {
+    return NULL;
+}
+
+void push(StackNode** top, int value) {
+    StackNode* NewTop = (StackNode*)malloc(sizeof(StackNode));
+    NewTop->next = *top;
+    NewTop->value = value;
+    *top = NewTop;
+}
+
+int pop(StackNode** top) {
+    if (*top == NULL) {
+        return -1;
+    }
+    StackNode* temp = *top;
+    int top_value = temp->value;
+    *top = temp->next;
+    free(temp);
+    return top_value;
+}
+
+int peek(StackNode* top) {
+    if (top == NULL) {
+        // Handle empty stack if needed
+        return -1;
+    }
+    int top_value = top->value;
+    return top_value;
+}
+
+char* removeDuplicates(char* s) {
+    StackNode* stack = createStack();
+    int index = 0;
+    for(int i = 0; i < strlen(s); i++)
     {
-        if(str[i] >= '0' && str[i] <= '9')  // 判断是数字字符
+        if(s[i] != (char)peek(stack))
         {
-            str[newindex-- ] = 'r';
-            str[newindex-- ] = 'e';
-            str[newindex-- ] = 'b';
-            str[newindex-- ] = 'm';
-            str[newindex-- ] = 'u';
-            str[newindex-- ] = 'n';
-        }
+            push(&stack, s[i]);
+            index++;
+        } 
         else
         {
-            str[newindex--] = str[i];
-        }
+            pop(&stack);
+            index--;
+        }  
     }
-    printf("%s", str);
+    char* arr = (char* )malloc(sizeof(char) * (index + 1));
+    for(int i = 0; i < index + 1; i++)
+    {
+        arr[i] = (char)pop(&stack);
+    }
+    arr[index] = '\0';
+    int left = 0;
+    int right = index - 1;
+    while(left < right)
+    {
+        char temp = arr[right];
+        arr[right] = arr[left];
+        arr[left] = temp;
+        left++;
+        right--;
+    }
+    return arr;
+}
+
+int main() {
+    char* test_strings[] = {
+        "aabbcc",
+        "abbaca",
+        "hello",
+        "mississippi",
+        "aabbcdeffg"
+    };
+
+    for (int i = 0; i < 5; i++) {
+        char* result = removeDuplicates(test_strings[i]);
+        printf("Original: %s, Without Duplicates: %s\n", test_strings[i], result);
+        free(result);  // Free the allocated memory
+    }
+
     return 0;
 }

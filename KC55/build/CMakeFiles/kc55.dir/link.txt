@@ -1,0 +1,3 @@
+"E:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\kc55.dir/objects.a
+E:\Program\mingw64\bin\ar.exe qc CMakeFiles\kc55.dir/objects.a @CMakeFiles\kc55.dir\objects1.rsp
+E:\Program\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\kc55.dir/objects.a -Wl,--no-whole-archive -o kc55.exe -Wl,--out-implib,libkc55.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\kc55.dir\linkLibs.rsp

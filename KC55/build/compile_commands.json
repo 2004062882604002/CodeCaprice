@@ -1,0 +1,8 @@
+[
+{
+  "directory": "D:/BaiduSyncdisk/CodeCaprice/KC55/build",
+  "command": "E:\\Program\\mingw64\\bin\\gcc.exe   -g -o CMakeFiles\\kc55.dir\\main.c.obj -c D:\\BaiduSyncdisk\\CodeCaprice\\KC55\\main.c",
+  "file": "D:/BaiduSyncdisk/CodeCaprice/KC55/main.c",
+  "output": "CMakeFiles/kc55.dir/main.c.obj"
+}
+]
