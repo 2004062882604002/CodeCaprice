@@ -16,24 +16,28 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-void PreorderT(struct TreeNode* root, int* num, int* index) {
-    if (root == NULL) {
-        return;
-    }
-    num[(*index)++] = root->val; 
-    PreorderT(root->left, num, index);
-    PreorderT(root->right, num, index);
-}
-
-
 int* preorderTraversal(struct TreeNode* root, int* returnSize) {
-    *returnSize = 0; 
-    int* num = (int*)malloc(sizeof(int) * 100); 
-    if (num == NULL) {
-        return NULL; 
+    // 结果数组
+    int* result = (int* )malloc(sizeof(int) *2000);
+    *returnSize = 0;
+    // 创建模拟栈
+    struct TreeNode* stk[200];
+    int stp_top = 0;   // 栈顶
+    // 基础判断
+    if(root == NULL)
+        return result;
+    struct TreeNode* node = root;
+    stk[stp_top++] = root; // 进栈push
+    while(stp_top > 0)
+    {
+        // 中节点
+        node = stk[stp_top - 1];
+        stp_top--;  
+        result[(*returnSize)++] = node->val;
+        if(node->right) stk[stp_top++] = node->right;
+        if(node->left) stk[stp_top++] = node->left;
     }
-    PreorderT(root, num, returnSize); 
-    return num;
+    return result;
 }
 // @lc code=end
 
