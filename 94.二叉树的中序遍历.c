@@ -16,19 +16,28 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-void  MiddleorderT(struct TreeNode* cur, int* num, int* index)
-{
-    if(cur == NULL)
-        return;
-    MiddleorderT(cur->left, num, index);
-    num[(*index)++ ] = cur->val;
-    MiddleorderT(cur->right, num, index);
-}
 int* inorderTraversal(struct TreeNode* root, int* returnSize) {
-    int* num = (int* )malloc(sizeof(int) * 100);
-    * returnSize = 0;
-    MiddleorderT(root, num, returnSize);
-    return num;
+    int* res = (int* )malloc(sizeof(int) * 100);
+    *returnSize = 0;
+    struct TreeNode* skt[2000];
+    int skt_top = 0;
+    struct TreeNode* node = root;
+    while(node != 0 || skt_top > 0)  // 判断栈是否为空
+    {
+        if(node != NULL)
+        {
+            skt[skt_top++] = node;
+            node = node->left;
+        }
+        else
+        {
+            node = skt[--skt_top];
+            res[(*returnSize)++] = node->val;
+            node = skt[skt_top];
+            node = node->right;
+        }
+    }
+    return res;
 }
 // @lc code=end
 
